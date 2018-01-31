@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.byanda.mobilesystem.bean.Operator;
 import com.byanda.mobilesystem.bean.Organization;
 import com.byanda.mobilesystem.bean.User;
-import com.byanda.mobilesystem.bean.json.TerminalList;
+import com.byanda.mobilesystem.bean.httpcode.TerminalList;
 import com.byanda.mobilesystem.service.SqlDataManager;
 import com.byanda.mobilesystem.util.ParseRequestUtil;
 

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONObject;
 import com.byanda.mobilesystem.bean.Operator;
 import com.byanda.mobilesystem.bean.Organization;
-import com.byanda.mobilesystem.bean.json.OperatorList;
+import com.byanda.mobilesystem.bean.httpcode.OperatorList;
 import com.byanda.mobilesystem.service.SqlDataManager;
 import com.byanda.mobilesystem.util.ParseRequestUtil;
 

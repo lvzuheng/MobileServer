@@ -21,7 +21,7 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 数据连接信息 -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://120.55.162.188:3306/DSJ?useUnicode=true&amp;characterEncoding=UTF8" />
+			value="jdbc:mysql://120.55.162.188:3306/Iteration?useUnicode=true&amp;characterEncoding=UTF8" />
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
 		<property name="user" value="root"></property>
 		<property name="password" value="admin"></property>

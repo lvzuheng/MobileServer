@@ -29,7 +29,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/JARssss/AXMLPrinter2.jar">
+	<classpathentry kind="lib" path="/JARssss/xml/AXMLPrinter2.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

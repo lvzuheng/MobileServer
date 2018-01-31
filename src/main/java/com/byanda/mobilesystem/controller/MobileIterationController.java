@@ -20,13 +20,14 @@ import com.alibaba.fastjson.JSON;
 import com.byanda.mobilesystem.bean.IntercomGroup;
 import com.byanda.mobilesystem.bean.Iteration;
 import com.byanda.mobilesystem.util.ApkUtils;
+import com.byanda.mobilesystem.util.Configure;
 
 
 
 @Controller
 @RequestMapping(value = "/iteration")
-public class MobileIteration {
-	private String address = "C:\\Users\\Administrator\\Desktop\\jar";
+public class MobileIterationController {
+	private String address = Configure.getConfig().getApkAddress();
 	private Iteration iteration;
 
 	@RequestMapping("/iterationInfo")
@@ -34,9 +35,9 @@ public class MobileIteration {
 	public String iterationInfo(HttpServletRequest request,HttpServletResponse response){
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		File newFile  = getUpdateFile();
-		if(iteration == null || newFile.lastModified() != iteration.getModifiedTime()){
-			if(newFile != null){
-				ApkUtils apkUtils = new ApkUtils(newFile.getAbsolutePath());
+		if(newFile != null){
+			if(iteration == null || newFile.lastModified() != iteration.getModifiedTime()){
+				ApkUtils apkUtils = ApkUtils.ApkParse(newFile.getAbsolutePath());
 				long lastModify =newFile.lastModified();
 				String versionCode =apkUtils.parseAttrbute("versionCode").get(0);
 				System.out.println("当前地址为："+request.getLocalAddr()+","+request.getRemoteAddr()+","+request.getRequestURI());
@@ -44,10 +45,11 @@ public class MobileIteration {
 				System.out.println("当前地址为："+url);
 				this.iteration = new Iteration(lastModify,newFile.getName(),versionCode,url,true);
 			}
-			else {
-				iteration =  new Iteration(0,null,null,null,false);
-			}
 		}
+		else {
+			iteration =  new Iteration(0,null,null,null,false);
+		}
+
 		return JSON.toJSONString(iteration);
 	}
 	@RequestMapping(value = "/iterationDownload",produces="text/plain;charset=UTF-8")
@@ -75,10 +77,12 @@ public class MobileIteration {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private File getUpdateFile(){
 		Long modifyTime = (long) 0;
 		File  newFile = null;
+		System.out.println("迭代apk存放地址为：");
+		System.out.println("迭代apk存放地址为："+address);
 		File file = new File(address);
 		if(file.exists()){
 			File[] files = file.listFiles();
@@ -91,6 +95,8 @@ public class MobileIteration {
 					}
 				}
 			}
+		}else {
+			file.mkdir();
 		}
 		return newFile;
 	}

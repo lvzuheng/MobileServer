@@ -9,14 +9,20 @@
     http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
     http://www.springframework.org/schema/context 
     http://www.springframework.org/schema/context/spring-context-4.0.xsd">
-    
-    <!-- 自动扫描与装配bean -->
-    <context:component-scan base-package="com/byanda/mobilesystem/controller"/>
-    <mvc:annotation-driven/> 
-    <mvc:resources location="/resources/" mapping="/resources/**"/> 
-    
-   <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-   		<property name="prefix" value="/WEB-INF/html/"/>
-   		<property name="suffix" value=".html"/>
-   </bean>
- </beans>
+
+	<!-- 自动扫描与装配bean -->
+	<context:component-scan base-package="com/byanda/mobilesystem/controller" />
+	<mvc:annotation-driven />
+	<mvc:resources location="/resources/" mapping="/resources/**" />
+
+	<bean id="internalResourceViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/html/" />
+		<property name="suffix" value=".html" />
+	</bean>
+	<!-- 设置上传文件最大值 1M=1*1024*1024(B)=1048576 bytes -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="1048576000" />
+	</bean>
+</beans>

@@ -1,4 +1,4 @@
-package com.byanda.mobilesystem.bean.json;
+package com.byanda.mobilesystem.bean.httpcode;
 
 public class OperatorList {
 

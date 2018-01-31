@@ -1,5 +1,6 @@
 package com.byanda.mobilesystem.util;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 import org.dom4j.Document;
@@ -22,13 +24,33 @@ import test.AXMLPrinter;
 
 
 
-public class ApkUtils {  
+public class ApkUtils {
 	private InputStream inputStream ;
 	private ZipFile zipFile ;
-	public ApkUtils(String apkPath) {
-		// TODO Auto-generated constructor stub
-		inputStream = getXmlInputStream(apkPath);
+	private BufferedInputStream bufferedInputStream;
+	public static ApkUtils ApkParse(String apkPath){
+		ApkUtils apkUtils = new ApkUtils(apkPath);
+		if(apkUtils.inputStream == null){
+			return null;
+		}
+		return apkUtils;
 	}
+	private ApkUtils(String apkPath) {
+		// TODO Auto-generated constructor stub
+		try {
+			inputStream = getXmlInputStream(apkPath);
+			if(inputStream != null){
+				bufferedInputStream = new BufferedInputStream(inputStream,inputStream.available());
+				bufferedInputStream.mark(0);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+
+
+	}
+	private ApkUtils(){}
 
 	private  InputStream getXmlInputStream(String apkPath) {
 
@@ -36,9 +58,8 @@ public class ApkUtils {
 			zipFile = new ZipFile(apkPath);
 			ZipEntry zipEntry = new ZipEntry("AndroidManifest.xml");
 			inputStream = zipFile.getInputStream(zipEntry);
-
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.err.println("error: "+ apkPath +"Not the correct format ");
 		}
 		return inputStream;
 	}
@@ -46,8 +67,9 @@ public class ApkUtils {
 	public List<String> parseAttrbute(String attr){
 		List<String> valueList = new ArrayList<String>();
 		try {
+
 			AXmlResourceParser parser = new AXmlResourceParser();
-			parser.open(inputStream);
+			parser.open(bufferedInputStream);
 			while (true) {
 				int type = parser.next();
 				if (type == XmlPullParser.END_DOCUMENT) {
@@ -57,16 +79,23 @@ public class ApkUtils {
 				if(type == XmlPullParser.START_TAG){
 					for(int i = 0;i<parser.getAttributeCount();i++){
 						if(parser.getAttributeName(i).equals(attr)){
-							System.out.println(parser.getAttributeName(i));
 							valueList.add(getAttributeValue(parser, i));
 						}
 					}
 				}
 			}
+
 		} catch (XmlPullParserException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			bufferedInputStream.reset();
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -200,6 +229,9 @@ public class ApkUtils {
 		try {
 			inputStream.close();
 			zipFile.close();
+			bufferedInputStream.close();
+			zipFile = null;
+			bufferedInputStream = null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

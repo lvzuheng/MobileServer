@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.byanda.mobilesystem.bean.json.LogList;
+import com.byanda.mobilesystem.bean.httpcode.LogList;
 import com.byanda.mobilesystem.service.SqlDataManager;
 import com.byanda.mobilesystem.util.ParseRequestUtil;
 

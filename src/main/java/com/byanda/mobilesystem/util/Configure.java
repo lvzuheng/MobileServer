@@ -56,8 +56,11 @@ public class Configure {
 	}
 
 	public static Config getConfig(){
-		if(config == null)
+		if(config == null){
 			config = new Config();
+			Init();
+		}
+			
 		return config;
 	}
 
@@ -90,8 +93,11 @@ public class Configure {
 					field = getConfig().getClass().getDeclaredField(String.valueOf(entry.getKey()));
 					field.setAccessible(true);
 					String type = field.getType().getName();
+					System.out.println("field:"+type+","+entry.getValue());
 			        if ("java.lang.String".equals(type)) {
-			            field.set(null,entry.getValue());
+			        	System.out.println("field:"+field+","+entry.getValue());
+			            field.set(null,(String)entry.getValue());
+			            System.out.println("field:"+field+","+entry.getValue());
 			        } else if ("byte".equals(type) || "java.lang.Byte".equals(type)) {
 			            field.set( null,(Byte) entry.getValue());
 			        } else if ("short".equals(type) || "java.lang.Short".equals(type)) {
@@ -118,7 +124,7 @@ public class Configure {
 	} 
 	
 	public static class Config{
-		private String apkAddress ;
+		private static String apkAddress ;
 		public Config(){}
 		public String getApkAddress() {
 			return apkAddress;
