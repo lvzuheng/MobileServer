@@ -21,10 +21,10 @@
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<!-- 数据连接信息 -->
 		<property name="jdbcUrl"
-			value="jdbc:mysql://120.55.162.188:3306/Iteration?useUnicode=true&amp;characterEncoding=UTF8" />
+			value="jdbc:mysql://127.0.0.1:3306/Iteration?useUnicode=true&amp;characterEncoding=UTF8" />
 		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
 		<property name="user" value="root"></property>
-		<property name="password" value="admin"></property>
+		<property name="password" value="123456"></property>
 		<!-- 其他配置 -->
 		<!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
 		<property name="initialPoolSize" value="3"></property>
